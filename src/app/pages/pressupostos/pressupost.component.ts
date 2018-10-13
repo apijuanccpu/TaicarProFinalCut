@@ -42,7 +42,7 @@ export class PressupostComponent implements OnInit {
   // article: PressupostDetall = new PressupostDetall(0, '', '', '', '', 0, '', 0, '');
   // pressupost_detall: PressupostDetall[] = [];
   persona: Persona = new Persona('', '', '', '', '', '', '');
-  pressupost: Pressupost = new Pressupost(0, null, null, null , new Array<PressupostDetall>(), 0, 0, '', '', '');
+  pressupost: Pressupost = new Pressupost(0, null, null, null , new Array<PressupostDetall>(), 0, 0, 'vigent', '', '');
   detallsaborrar: PressupostDetall[] = [];
 
   vehicles: Vehicle[] = [];

@@ -74,7 +74,11 @@
             <div class="card-body">
 
                 <h3 class="card-title">Pressupostos: ( <small> {{ _pressupostosService.totalPressupostos }} </small> )</h3>
-
+                <div _ngcontent-c9="" class="custom-control custom-checkbox">
+                    <input _ngcontent-c9="" class="custom-control-input" id="customCheck1" type="checkbox">
+                    <label _ngcontent-c9="" class="custom-control-label" for="customCheck1">Check this custom checkbox
+                    </label>
+                </div>
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -107,8 +111,8 @@
                             </td>
                             <td class="text-nowrap">
                                 <a [routerLink]="['/pressupost', pressupost._id , '' ]" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
-                                <a (click)="borrarPressupost( pressupost._id )" data-toggle="tooltip" data-original-title="Delete"> <i class="fa fa-close text-danger"></i> </a>
-                                <a (click)="anularPressupost( pressupost._id )" data-toggle="tooltip" data-original-title="Close"> <i class="fa fa-cc-amex text-danger"></i> </a>
+                                <a *ngIf="pressupost.estat == 'vigent' " (click)="borrarPressupost( pressupost._id )" data-toggle="tooltip" data-original-title="Delete"> <i class="fa fa-close text-danger"></i> </a>
+                                <a *ngIf="pressupost.estat == 'vigent' " (click)="anularPressupost( pressupost._id )" data-toggle="tooltip" data-original-title="Close"> <i class="fa fa-cc-amex text-danger"></i> </a>
                             </td>
                             <td>
                             </td>
