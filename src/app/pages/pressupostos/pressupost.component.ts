@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { PressupostService, PersonaService, VehicleService, ReservaService } from '../../services/service.index';
+import { Component, OnInit, Input, ViewChild, TemplateRef } from '@angular/core';
+import { PressupostService, PersonaService, VehicleService, ReservaService, FacturaService } from '../../services/service.index';
 import { Pressupost } from '../../models/pressupost.model';
 import { PressupostDetall } from '../../models/pressupostdetall';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,10 +7,11 @@ import { Persona } from '../../models/persona.model';
 import { Vehicle } from '../../models/vehicle.model';
 import swal from 'sweetalert2';
 import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
+
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-
 
 import { Subscriber } from 'rxjs/Subscriber';
 import { Reserva } from '../../models/reserva.model';
@@ -19,21 +20,18 @@ import { map } from 'rxjs/operator/map';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { IAlert } from '../../component/alert/alert.component';
 
-
-
-
 @Component({
   selector: 'app-pressupost',
   templateUrl: './pressupost.component.html'
+
 })
 export class PressupostComponent implements OnInit {
+  @ViewChild('modalContent') modalContent: TemplateRef<any>;
 
   @Input()
   public alerts: Array<IAlert> = [];
 
   private backup: Array<IAlert>;
-
-
 
   valor = 'disponible';
   vflag = false;
@@ -45,6 +43,7 @@ export class PressupostComponent implements OnInit {
   pressupost: Pressupost = new Pressupost(0, null, null, null , new Array<PressupostDetall>(), 0, 0, 'vigent', '', '');
   detallsaborrar: PressupostDetall[] = [];
 
+  esnou: boolean;
   vehicles: Vehicle[] = [];
   nodisponibles: Reserva[] = [];
   numnodisponibles = 0;
@@ -55,13 +54,15 @@ export class PressupostComponent implements OnInit {
   closeResult: string;
 
   constructor(
+    private toastr: ToastrService,
     public _vehiclesService: VehicleService,
     public _pressupostService: PressupostService,
     public _clientsService: PersonaService,
     public router: Router,
     public activatedRoute: ActivatedRoute,
     public _reservaService: ReservaService,
-    private modalService: NgbModal
+    public modalService: NgbModal,
+    public _facturaService: FacturaService
 
   ) {
     activatedRoute.params.subscribe( params => {
@@ -77,10 +78,11 @@ export class PressupostComponent implements OnInit {
 
       if ( id !== 'nuevo' ) {
         this.cargarPressupost( id );
+        this.esnou = false;
 
       } else {
         if (id === 'nuevo') {
-
+          this.esnou = true;
           this.cargarClient( client);
 
         }
@@ -310,22 +312,6 @@ export class PressupostComponent implements OnInit {
   }
 
 
-
-  // comprovaReserva( varticle: PressupostDetall): Observable<any> {
-
-  //     return new Observable( (observer: Subscriber<any>) => {
-
-
-
-  //       console.log(date_1);
-  //       console.log(date_2);
-
-
-  //         observer.complete();
-  //     } );
-
-  // }
-
   borrarDetall( index: number) {
     // this._reservaService.borrarReserva(pressupost.detall.id);
     console.log(this.pressupost.detall[index]);
@@ -348,7 +334,7 @@ export class PressupostComponent implements OnInit {
 
   anulaPressupost( vpressupost: Pressupost) {
     swal({
-      title: 'Are you sure?',
+      title: 'Estàs segur danular aquest pressupost?',
       text: 'You wont be able to revert this!',
       type: 'warning',
       showCancelButton: true,
@@ -359,6 +345,65 @@ export class PressupostComponent implements OnInit {
     this._pressupostService.guardaPressupost (vpressupost)
             .subscribe( pressupost => {
               console.log(pressupost);
+              this.toastr.warning('Pressupost anulat');
+              this._reservaService.anular(vpressupost._id)
+                .subscribe( reserva => {
+                  console.log(reserva);
+                });
+  });
+
+      }
+    });
+
+  }
+
+  confirmarPressupost( vpressupost: Pressupost) {
+    swal({
+      title: 'Estàs segur de confirmar aquest pressupost?',
+      text: 'You wont be able to revert this!',
+      type: 'warning',
+      showCancelButton: true,
+    }).then((result) => {
+      if (result.value) {
+        vpressupost.estat = 'confirmat';
+
+    this._pressupostService.guardaPressupost (vpressupost)
+            .subscribe( pressupost => {
+              console.log(pressupost);
+              this.toastr.info('Pressupost confirmat');
+              this._reservaService.confirmar(vpressupost._id)
+                .subscribe( reserva => {
+                  console.log(reserva);
+                });
+  });
+
+      }
+    });
+
+  }
+
+  facturarPressupost( vpressupost: Pressupost) {
+    swal({
+      title: 'Estàs segur de facturar aquest pressupost?',
+      text: 'You wont be able to revert this!',
+      type: 'warning',
+      showCancelButton: true,
+    }).then((result) => {
+      if (result.value) {
+        vpressupost.estat = 'facturat';
+
+    this._pressupostService.guardaPressupost (vpressupost)
+            .subscribe( pressupost => {
+              console.log(pressupost);
+              this.toastr.success('Pressupost facturat');
+              this._reservaService.facturar(vpressupost._id)
+                .subscribe( reserva => {
+                  console.log(reserva);
+                  this._facturaService.crearFactura(vpressupost)
+                    .subscribe( factura => {
+                      console.log(factura);
+                    });
+                });
   });
 
       }
@@ -369,6 +414,11 @@ export class PressupostComponent implements OnInit {
   cancelaOrdre() {
     this.detallsaborrar = [];
     this.router.navigate(['/pressupostos']);
+
+  }
+
+  calculaTemporada(vdatainici: Date) {
+
 
   }
 
@@ -414,15 +464,11 @@ export class PressupostComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-add-reserva'}).result.then((result) => {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
-  }
-
-  openLg(content) {
-    this.modalService.open(content, { size: 'lg' });
   }
 
   private getDismissReason(reason: any): string {
@@ -434,20 +480,4 @@ export class PressupostComponent implements OnInit {
       return  `with: ${reason}`;
     }
   }
-
-  public closeAlert(alert: IAlert) {
-    const index: number = this.alerts.indexOf(alert);
-    this.alerts.splice(index, 1);
-  }
-
-  public reset() {
-    this.alerts = this.backup.map((alert: IAlert) => Object.assign({}, alert));
-  }
-
-}
-
-export interface IAlert {
-  id: number;
-  type: string;
-  message: string;
 }

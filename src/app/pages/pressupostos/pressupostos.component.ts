@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import {NgbModal, ModalDismissReasons, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 
 
@@ -17,18 +17,24 @@ import { Reserva } from '../../models/reserva.model';
 @Component({
   selector: 'app-pressupostos',
   templateUrl: './pressupostos.component.html'
+
 })
 export class PressupostosComponent implements OnInit {
+  @ViewChild('modalContent') modalContent: TemplateRef<any>;
+
   closeResult: string;
   public model: any;
+
+
 
   nomsclients = [];
   clients: Persona[] = [];
   pressupostos: Pressupost[] = [];
   constructor(
+
     public _pressupostosService: PressupostService,
     public _personesService: PersonaService,
-    private modalService: NgbModal,
+    public modalService: NgbModal,
     private _reservaService: ReservaService
   ) { }
 
@@ -36,6 +42,8 @@ export class PressupostosComponent implements OnInit {
     this.carregarPressupostos();
     this.carregarClients();
   }
+
+
 
   obteniretiquetaFormulari( estat: string): string {
     switch (estat) {
@@ -138,27 +146,26 @@ export class PressupostosComponent implements OnInit {
     });
   }
 
-  open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
+//   openModal() { this.modalRef = this.modalService.open(); }
+// closeModal() { this.modalRef.close(); }
 
-  openLg(content) {
-    this.modalService.open(content, { size: 'lg' });
-  }
+open(content) {
+  this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    this.closeResult = `Closed with: ${result}`;
+  }, (reason) => {
+    this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+  });
+}
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return  `with: ${reason}`;
-    }
+private getDismissReason(reason: any): string {
+  if (reason === ModalDismissReasons.ESC) {
+    return 'by pressing ESC';
+  } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+    return 'by clicking on a backdrop';
+  } else {
+    return  `with: ${reason}`;
   }
+}
 
   formatter = (result: string) => result.toUpperCase();
 

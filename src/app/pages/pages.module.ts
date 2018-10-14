@@ -18,6 +18,8 @@ import { CalendarModule } from 'angular-calendar';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap/modal/modal.module';
 import { FlatpickrModule } from 'angularx-flatpickr';
 
+import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
+
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 
@@ -51,6 +53,7 @@ import { ReservesComponent } from './reserves/reserves.component';
 import { Caravana2Component } from './vehicles/caravana2.component';
 import { VerificaTokenGuard, AdminGuard } from '../services/service.index';
 import { UsuariosComponent } from './usuarios/usuarios.component';
+import { ToastrModule } from 'ngx-toastr';
 
 
 const routes: Routes = [
@@ -212,7 +215,8 @@ const routes: Routes = [
     imports: [
         FormsModule,
         CommonModule,
-        NgbModule.forRoot(),
+        NgbModule,
+        ToastrModule.forRoot(),
         FlatpickrModule.forRoot(),
         ChartsModule,
         PipesModule,

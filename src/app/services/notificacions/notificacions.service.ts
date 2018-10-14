@@ -10,23 +10,23 @@ import { Reserva } from '../../models/reserva.model';
 import * as moment from 'moment';
 
 @Injectable()
-export class ReservaService {
+export class NotificacionsService {
 
   totalReserves = 0;
-  nodisponibles = [];
-
+  notificacions = [];
 
   constructor(
     public http: HttpClient,
     public _usuarioService: UsuarioService
   ) { }
 
-  carregarReserves() {
-    const url = URL_SERVICIOS + '/reserva';
+  carregarpressupostos_datavigencia(vdata: String) {
+    let url = URL_SERVICIOS + '/pressupost/caduquensegonsvigencia/' + vdata;
+    url += '?token=' + this._usuarioService.token;
     return this.http.get( url )
         .map( (resp: any) => {
-          this.totalReserves = resp.total;
-          return resp.reserves;
+          // this.totalReserves = resp.total;
+          return resp.pressupostos;
         });
   }
 
@@ -163,30 +163,6 @@ export class ReservaService {
         let url = URL_SERVICIOS + '/reserva/' + idreserva;
         url += '?token=' + this._usuarioService.token;
         return this.http.delete( url )
-                    .map( (resp: any) => resp.reserva );
-      }
-
-      anular( id: string) {
-
-        let url = URL_SERVICIOS + '/reserva/anular/' + id;
-        url += '?token=' + this._usuarioService.token;
-        return this.http.get( url )
-                    .map( (resp: any) => resp.reserva );
-      }
-
-      confirmar( id: string) {
-
-        let url = URL_SERVICIOS + '/reserva/confirmar/' + id;
-        url += '?token=' + this._usuarioService.token;
-        return this.http.get( url )
-                    .map( (resp: any) => resp.reserva );
-      }
-
-      facturar( id: string) {
-
-        let url = URL_SERVICIOS + '/reserva/facturar/' + id;
-        url += '?token=' + this._usuarioService.token;
-        return this.http.get( url )
                     .map( (resp: any) => resp.reserva );
       }
 }

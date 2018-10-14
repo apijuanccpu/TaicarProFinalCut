@@ -18,6 +18,8 @@ import {
   PersonaService,
   PressupostService,
   ReservaService,
+  NotificacionsService,
+  FacturaService,
   VerificaTokenGuard
  } from './service.index';
 
@@ -43,6 +45,8 @@ import {
     VehicleService,
     PressupostService,
     ReservaService,
+    NotificacionsService,
+    FacturaService,
     VerificaTokenGuard
   ],
   declarations: []

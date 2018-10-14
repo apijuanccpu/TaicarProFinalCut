@@ -6,7 +6,8 @@
                     <div class="stats">
                         <h1 class="text-white">3257+</h1>
                         <h6 class="text-white">Pressupostos</h6>
-                        <button class="btn btn-rounded btn-outline btn-light m-t-10 font-14" (click)="openLg(content)">Crea Pressupost</button>
+                        <button class="btn btn-rounded btn-outline btn-light m-t-10 font-14" (click)="open(content)">Crea Pressupost</button>
+                        <!-- <button class="btn btn-rounded btn-outline btn-light m-t-10 font-14" (click)="open(modalContent)">Crea Pressupost</button> -->
 
                     </div>
                     <div class="stats-icon text-right ml-auto"><i class="fa fa-twitter display-5 op-3 text-dark"></i></div>
@@ -110,9 +111,11 @@
                                 <span [class]="obteniretiquetaFormulari(pressupost.estat)">{{ pressupost.estat }}</span>
                             </td>
                             <td class="text-nowrap">
-                                <a [routerLink]="['/pressupost', pressupost._id , '' ]" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                                <button [routerLink]="['/pressupost', pressupost._id , '' ]" class="btn btn-sm btn-success" type="button">Edita</button>
+                                <button *ngIf="pressupost.estat == 'vigent' " class="btn btn-sm btn-danger" (click)="borrarPressupost( pressupost._id)" type="button">Esborra</button>
+                                <!-- <a [routerLink]="['/pressupost', pressupost._id , '' ]" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
                                 <a *ngIf="pressupost.estat == 'vigent' " (click)="borrarPressupost( pressupost._id )" data-toggle="tooltip" data-original-title="Delete"> <i class="fa fa-close text-danger"></i> </a>
-                                <a *ngIf="pressupost.estat == 'vigent' " (click)="anularPressupost( pressupost._id )" data-toggle="tooltip" data-original-title="Close"> <i class="fa fa-cc-amex text-danger"></i> </a>
+                                <a *ngIf="pressupost.estat == 'vigent' " (click)="anularPressupost( pressupost._id )" data-toggle="tooltip" data-original-title="Close"> <i class="fa fa-cc-amex text-danger"></i> </a> -->
                             </td>
                             <td>
                             </td>
@@ -137,17 +140,7 @@
             <div class="form-group">
                 <label>Client</label>
                 <input #input (keyup)="buscarClient( input.value )" type="text" class="form-control" placeholder="Buscar client..."></div>
-            <!-- <input type="text" class="form-control" placeholder="Introdueix el client"> </div> -->
-            <!-- <div class="form-group">
-                <label>Assign to</label>
-                <select class="custom-select form-control pull-right">
-                                    <option selected="">Sachin</option>
-                                    <option value="1">Sehwag</option>
-                                    <option value="2">Pritam</option>
-                                    <option value="3">Alia</option>
-                                    <option value="4">Varun</option>
-                                </select>
-            </div> -->
+
         </form>
         <div class="row">
             <div class="col-lg-6">
@@ -195,7 +188,3 @@
         <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
     </div>
 </ng-template>
-
-<hr>
-
-<pre>{{closeResult}}</pre>

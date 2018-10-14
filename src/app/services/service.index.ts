@@ -14,6 +14,9 @@ export { PersonaService } from './persona/persona.service';
 export { PressupostService } from './pressupost/pressupost.service';
 export { ReservaService } from './reserva/reserva.service';
 
+export { NotificacionsService } from './notificacions/notificacions.service';
+export { FacturaService } from './factura/factura.service';
+
 
 export { SubirArchivoService } from './subir-archivo/subir-archivo.service';
 export { UsuarioService } from './usuario/usuario.service';

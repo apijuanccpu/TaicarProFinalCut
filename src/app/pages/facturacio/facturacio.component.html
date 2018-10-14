@@ -48,7 +48,7 @@
         <div class="card">
             <div class="card-body">
 
-                <input #pressu (keyup)="buscarPressupost( pressu.value )" type="text" class="form-control" placeholder="Buscar pressupost...">
+                <input #factu (keyup)="buscarFactura( factu.value )" type="text" class="form-control" placeholder="Buscar factura...">
 
             </div>
         </div>
@@ -61,7 +61,7 @@
         <div class="card">
             <div class="card-body">
 
-                <h3 class="card-title">Pressupostos: ( <small> {{ _pressupostosService.totalPressupostos }} </small> )</h3>
+                <h3 class="card-title">Factures: ( <small> {{ _facturesService.totalFactures }} </small> )</h3>
 
                 <table class="table table-hover">
                     <thead>
@@ -74,18 +74,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let pressupost of pressupostos">
+                        <tr *ngFor="let factura of factures">
                             <td>
-                                {{ pressupost.num }}
+                                {{ factura.num }}
                             </td>
                             <td>
-                                {{ pressupost.data }}
+                                {{ factura.data }}
                             </td>
                             <td>
 
                             </td>
                             <td>
-                                {{ pressupost.client.nombre }}
+                                {{ factura.client.nombre }}
                             </td>
                             <td>
                                 <button type="button" class="btn waves-effect waves-light btn-success">Factura</button>

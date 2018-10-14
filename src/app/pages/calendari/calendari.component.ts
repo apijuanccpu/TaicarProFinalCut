@@ -24,6 +24,7 @@ import {
   CalendarEventAction,
   CalendarEventTimesChangedEvent
 } from 'angular-calendar';
+import { Reserva } from '../../models/reserva.model';
 
 const colors: any = {
   red: {
@@ -49,7 +50,7 @@ const colors: any = {
 export class CalendariComponent implements OnInit {
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
 
-  bookingsperiode = [];
+  reserves: Reserva[] = [];
 
   view = 'month';
 
@@ -167,16 +168,16 @@ export class CalendariComponent implements OnInit {
   }
 
   carregarEvents() {
-    this._reservaService.comprovaReservaDates('2018-10-01', '2018-10-31', '5b7230f1adb12609aa757567')
+    this._reservaService.carregarReserves()
       .subscribe( resp => {
-        this.bookingsperiode = resp.bookings;
+        this.reserves = resp;
         console.log(resp);
-        console.log(this.bookingsperiode);
-        for (const entry of this.bookingsperiode){
+        console.log(this.reserves);
+        for (const entry of this.reserves){
           this.events.push({
             title: 'Reserva vehicle:' + entry.vehicle,
-            start: startOfDay(entry.data),
-            end: endOfDay(entry.data),
+            start: startOfDay(entry.data_inicial),
+            end: endOfDay(entry.data_final),
             color: colors.red,
             draggable: true,
             resizable: {

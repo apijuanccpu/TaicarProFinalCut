@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Persona } from '../../models/persona.model';
 import { Pressupost } from '../../models/pressupost.model';
-import { PressupostService, PersonaService } from '../../services/service.index';
+import { FacturaService, PersonaService, PressupostService } from '../../services/service.index';
 import swal from 'sweetalert2';
+import { Factura } from '../../models/factura.model';
 
 
 
@@ -14,14 +15,14 @@ export class FacturacioComponent implements OnInit {
 
 
   clients: Persona[] = [];
-  pressupostos: Pressupost[] = [];
+  factures: Factura[] = [];
   constructor(
-    public _pressupostosService: PressupostService,
+    public _facturesService: FacturaService,
     public _personesService: PersonaService
   ) { }
 
   ngOnInit() {
-    this.carregarPressupostos();
+    this.carregarFactures();
   }
 
   carregarClients() {
@@ -29,9 +30,9 @@ export class FacturacioComponent implements OnInit {
         .subscribe( persones => this.clients = persones);
   }
 
-  carregarPressupostos() {
-    this._pressupostosService.carregarPressupostos()
-        .subscribe( pressupostos => this.pressupostos = pressupostos);
+  carregarFactures() {
+    this._facturesService.carregarFactures()
+        .subscribe( factures => this.factures = factures);
   }
 
   buscarClient( termino: string ) {
@@ -45,34 +46,34 @@ export class FacturacioComponent implements OnInit {
 
   }
 
-  buscarPressupost( termino: string ) {
+  buscarFactura( termino: string ) {
 
     console.log('buscant pressupost!' + termino);
     if ( termino.length <= 0 ) {
-      this.carregarPressupostos();
+      this.carregarFactures();
       return;
     }
-    this._pressupostosService.buscarPressupostos( termino )
-      .subscribe( pressupostos => this.pressupostos = pressupostos);
+    // this._pressupostosService.buscarPressupostos( termino )
+    //   .subscribe( pressupostos => this.pressupostos = pressupostos);
 
   }
 
-  borrarPressupost (termino: string) {
-    swal({
-      title: 'Are you sure?',
-      text: 'You wont be able to revert this!',
-      type: 'warning',
-      showCancelButton: true
-    }).then((result) => {
-      if (result.value) {
-        this._pressupostosService.borrarPressupost(termino)
-      .subscribe( pressupost => {
-        this.carregarPressupostos();
-        console.log(pressupost);
-      });
-      }
-    });
+  // borrarPressupost (termino: string) {
+  //   swal({
+  //     title: 'Are you sure?',
+  //     text: 'You wont be able to revert this!',
+  //     type: 'warning',
+  //     showCancelButton: true
+  //   }).then((result) => {
+  //     if (result.value) {
+  //       this._pressupostosService.borrarPressupost(termino)
+  //     .subscribe( pressupost => {
+  //       this.carregarPressupostos();
+  //       console.log(pressupost);
+  //     });
+  //     }
+  //   });
 
-  }
+  // }
 
 }
