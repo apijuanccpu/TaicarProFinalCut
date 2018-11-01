@@ -109,7 +109,7 @@ export class ReservaService {
 
         reservadatesBooking(datainici: string, datafi: string, vehicle: string, vpressu: Pressupost) {
 
-          let url = URL_SERVICIOS + '/booking/actualitzarperiodebooking/' + vehicle + '/' + datainici + '/' + datafi + '/false';
+          let url = URL_SERVICIOS + '/booking/put_actualitzarperiodebooking/' + vehicle + '/' + datainici + '/' + datafi + '/false';
           url += '?token=' + this._usuarioService.token;
           console.log(url);
           console.log(vpressu);
@@ -121,7 +121,7 @@ export class ReservaService {
 
         lliuradatesBooking(datainici: string, datafi: string, vehicle: string, vpressu: Pressupost) {
 
-          let url = URL_SERVICIOS + '/booking/actualitzarperiodebooking/' + vehicle + '/' + datainici + '/' + datafi + '/true';
+          let url = URL_SERVICIOS + '/booking/actualitzarperiodebooking/' + vehicle['_id'] + '/' + datainici + '/' + datafi + '/true';
           url += '?token=' + this._usuarioService.token;
           console.log(url);
           return this.http.get( url )

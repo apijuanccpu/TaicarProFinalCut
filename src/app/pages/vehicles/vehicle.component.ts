@@ -13,7 +13,7 @@ import { ReservaService } from '../../services/reserva/reserva.service';
 })
 export class VehicleComponent implements OnInit {
 
-  vehicle: Vehicle = new Vehicle('', '', '', '', '', 0, '', '', null , 0, 0, 0, 0,  '');
+  vehicle: Vehicle = new Vehicle('', '', '', '', '', 0, '', '', null , '', 0, 0, 0, 0,  '');
 
   constructor(
     public _vehicleService: VehicleService,

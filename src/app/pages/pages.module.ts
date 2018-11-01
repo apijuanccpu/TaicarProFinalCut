@@ -54,6 +54,7 @@ import { Caravana2Component } from './vehicles/caravana2.component';
 import { VerificaTokenGuard, AdminGuard } from '../services/service.index';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { ToastrModule } from 'ngx-toastr';
+import { NotificacionsComponent } from './notificacions/notificacions.component';
 
 
 const routes: Routes = [
@@ -126,10 +127,10 @@ const routes: Routes = [
         component: ReservesComponent
     },
     {
-        path: 'factura',
+        path: 'factura/:id',
         data: {
           title: 'Starter Page',
-          urls: [{ title: 'Pressupostos', url: '/dashboard' }, { title: 'Gestió de pressupostos' }]
+          urls: [{ title: 'Factura', url: '/factura' }, { title: 'Gestió de Factura' }]
         },
         component: FacturaComponent
     },
@@ -149,14 +150,14 @@ const routes: Routes = [
         },
         component: CalendariComponent
     },
-    // {
-    //     path: 'clients',
-    //     data: {
-    //       title: 'Taicar - Admin',
-    //       urls: [{ title: 'Clients', url: '/persones' }, { title: 'Gestió de clients' }]
-    //     },
-    //     component: CalendariComponent
-    // },
+    {
+        path: 'notificacions',
+        data: {
+          title: 'Taicar - Admin',
+          urls: [{ title: 'Notificacions', url: '/notificacions' }, { title: 'Gestió de notificacons' }]
+        },
+        component: NotificacionsComponent
+    },
     {
     path: 'usuarios',
         component: UsuariosComponent,
@@ -204,7 +205,7 @@ const routes: Routes = [
         ReservesComponent,
         FacturacioComponent,
         FacturaComponent,
-        Caravana2Component
+        NotificacionsComponent
     ],
     exports: [
         CalendariComponent

@@ -68,7 +68,7 @@
                         <tr>
                             <th>Num</th>
                             <th>Data</th>
-                            <th></th>
+                            <th>Data de venciment</th>
                             <th>Client</th>
                             <th>Preu</th>
                         </tr>
@@ -82,14 +82,16 @@
                                 {{ factura.data }}
                             </td>
                             <td>
-
+                                {{ factura.data_vigencia }}
                             </td>
                             <td>
                                 {{ factura.client.nombre }}
                             </td>
                             <td>
-                                <button type="button" class="btn waves-effect waves-light btn-success">Factura</button>
-                                <button type="button" class="btn waves-effect waves-light btn-danger">Anula</button>
+                                {{ factura.client.nombre }}
+                            </td>
+                            <td>
+                                <button [routerLink]="['/factura', factura._id ]" class="btn btn-sm btn-success" type="button">Obrir</button>
                             </td>
                         </tr>
                     </tbody>

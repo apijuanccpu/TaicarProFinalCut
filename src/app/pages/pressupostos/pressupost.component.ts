@@ -28,10 +28,6 @@ import { IAlert } from '../../component/alert/alert.component';
 export class PressupostComponent implements OnInit {
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
 
-  @Input()
-  public alerts: Array<IAlert> = [];
-
-  private backup: Array<IAlert>;
 
   valor = 'disponible';
   vflag = false;
@@ -172,6 +168,39 @@ export class PressupostComponent implements OnInit {
     this.detallsaborrar = [];
   }
 
+  // guardaPressupost( vpressupost: Pressupost ) {
+
+  //   this.actualitzarBookings(vpressupost);
+  //   this._pressupostService.guardaPressupost (vpressupost)
+  //           .subscribe( pressupost => {
+  //             console.log(pressupost);
+  //             const idpressupost = pressupost._id;
+  //             vpressupost._id = idpressupost;
+  //             // this._pressupostService.esborraPressupostosDetallDePressupost(idpressupost)
+  //               // .subscribe( pressupostos_detall => {
+  //                 // console.log( pressupostos_detall);
+  //                 for (const entry of this.pressupost.detall) {
+  //                   entry.id_pressupost = idpressupost;
+  //                   this._pressupostService.guardaPressupostDetall(entry)
+  //                     .subscribe( pressupost_detall => {
+  //                       console.log(pressupost_detall);
+  //                       this._reservaService.guardarReserva(pressupost_detall)
+  //                         .subscribe( reserva => {
+  //                           console.log(reserva);
+  //                           this._reservaService.reservadatesBooking(pressupost_detall.data_inicial,
+  //                             pressupost_detall.data_final, pressupost_detall.vehicle, vpressupost)
+  //                             .subscribe( resp => {
+  //                               console.log(resp);
+  //                             });
+  //                         });
+
+  //                     });
+  //               }
+  //               this.router.navigate(['/pressupostos']);
+  //                 // this.router.navigate(['/vehicle', vehicle._id ]);
+  //           });
+  // }
+
   guardaPressupost( vpressupost: Pressupost ) {
 
     this.actualitzarBookings(vpressupost);
@@ -234,13 +263,13 @@ export class PressupostComponent implements OnInit {
               'You clicked the button!',
               'success'
             );
-            for (const item of resp.bookings) {
-              this.alerts.push({
-                id: 1,
-                type: 'danger',
-                message: 'Aquest vehicle està reservat en data ' + item.data + ' inclòs al pressupost:' + item.pressupost
-              });
-            }
+            // for (const item of resp.bookings) {
+            //   this.alerts.push({
+            //     id: 1,
+            //     type: 'danger',
+            //     message: 'Aquest vehicle està reservat en data ' + item.data + ' inclòs al pressupost:' + item.pressupost
+            //   });
+            // }
 
             this.article = new PressupostDetall('', '', '', '', '', 0, '', 0, '');
             this.nodisponibles = [];

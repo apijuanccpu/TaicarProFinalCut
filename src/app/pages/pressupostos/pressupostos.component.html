@@ -1,51 +1,4 @@
 <div class="row animated fadeIn">
-    <div class="col-lg-4">
-        <div class="card bg-info text-white">
-            <div class="card-body">
-                <div class="d-flex">
-                    <div class="stats">
-                        <h1 class="text-white">3257+</h1>
-                        <h6 class="text-white">Pressupostos</h6>
-                        <button class="btn btn-rounded btn-outline btn-light m-t-10 font-14" (click)="open(content)">Crea Pressupost</button>
-                        <!-- <button class="btn btn-rounded btn-outline btn-light m-t-10 font-14" (click)="open(modalContent)">Crea Pressupost</button> -->
-
-                    </div>
-                    <div class="stats-icon text-right ml-auto"><i class="fa fa-twitter display-5 op-3 text-dark"></i></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-4">
-        <div class="card bg-primary text-white">
-            <div class="card-body">
-                <div class="d-flex">
-                    <div class="stats">
-                        <h1 class="text-white">6509+</h1>
-                        <h6 class="text-white">Facebook Likes</h6>
-                        <button class="btn btn-rounded btn-outline btn-light m-t-10 font-14">Check list</button>
-                    </div>
-                    <div class="stats-icon text-right ml-auto"><i class="fa fa-facebook display-5 op-3 text-dark"></i></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-4">
-        <div class="card bg-success text-white">
-            <div class="card-body">
-                <div class="d-flex">
-                    <div class="stats">
-                        <h1 class="text-white">9062+</h1>
-                        <h6 class="text-white">Subscribe</h6>
-                        <button class="btn btn-rounded btn-outline btn-light m-t-10 font-14">Check list</button>
-                    </div>
-                    <div class="stats-icon text-right ml-auto"><i class="fa fa-envelope display-5 op-3 text-dark"></i></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row animated fadeIn">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
@@ -57,13 +10,17 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row animated fadeIn">
     <div class="col-12">
         <div class="card">
-            <select class="js-example-basic-single" name="state">
-                        <option value="AL">Alabama</option>
-                        <option value="WY">Wyoming</option>
-                    </select>
+            <div class="card-body">
+                <div class="text-right">
+                    <button (click)="open(content)" type="button" class="btn waves-effect waves-light btn-rounded btn-primary">
+                            <i class="fa fa-plus"></i> 
+                            Crea Pressupost
+                          </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -112,7 +69,8 @@
                             </td>
                             <td class="text-nowrap">
                                 <button [routerLink]="['/pressupost', pressupost._id , '' ]" class="btn btn-sm btn-success" type="button">Edita</button>
-                                <button *ngIf="pressupost.estat == 'vigent' " class="btn btn-sm btn-danger" (click)="borrarPressupost( pressupost._id)" type="button">Esborra</button>
+                                <button class="btn btn-sm btn-danger" (click)="borrarPressupost( pressupost._id)" type="button">Esborra</button>
+                                <!-- <button *ngIf="pressupost.estat == 'vigent' " class="btn btn-sm btn-danger" (click)="borrarPressupost( pressupost._id)" type="button">Esborra</button> -->
                                 <!-- <a [routerLink]="['/pressupost', pressupost._id , '' ]" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
                                 <a *ngIf="pressupost.estat == 'vigent' " (click)="borrarPressupost( pressupost._id )" data-toggle="tooltip" data-original-title="Delete"> <i class="fa fa-close text-danger"></i> </a>
                                 <a *ngIf="pressupost.estat == 'vigent' " (click)="anularPressupost( pressupost._id )" data-toggle="tooltip" data-original-title="Close"> <i class="fa fa-cc-amex text-danger"></i> </a> -->

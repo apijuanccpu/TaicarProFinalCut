@@ -175,10 +175,11 @@ export class CalendariComponent implements OnInit {
         console.log(this.reserves);
         for (const entry of this.reserves){
           this.events.push({
-            title: 'Reserva vehicle:' + entry.vehicle,
+            title: 'Reserva:' + entry._id + ' / ' + 'Vehicle:' + entry.vehicle['matricula'] + ' / '
+                  + 'Client:' + entry.pressupost['client'],
             start: startOfDay(entry.data_inicial),
             end: endOfDay(entry.data_final),
-            color: colors.red,
+            color: this.obtenirColor(entry.vehicle['color']),
             draggable: true,
             resizable: {
               beforeStart: true,
@@ -188,6 +189,22 @@ export class CalendariComponent implements OnInit {
           this.refresh.next();
         }
       });
+  }
+
+  obtenirColor(color: string) {
+
+    switch (color) {
+      case 'red':
+          return colors.red;
+
+      case 'blue':
+      return  colors.blue;
+
+      case 'yellow':
+        return colors.yellow;
+
+      }
+
   }
 
   ngOnInit() {

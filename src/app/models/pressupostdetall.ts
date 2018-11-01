@@ -12,6 +12,7 @@ export class PressupostDetall {
         public dies: number,
         public observacions?: string,
         public preu?: number,
-        public _id?: string
+        public _id?: string,
+        public id_factura?: string
     ) { }
 }

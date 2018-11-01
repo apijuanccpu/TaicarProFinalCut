@@ -54,7 +54,13 @@ export class PressupostosComponent implements OnInit {
       return 'label label-warning';
 
       case 'esborrat':
-      return 'label label-danger';
+        return 'label label-danger';
+
+        case 'facturat':
+        return 'label label-success';
+
+        case 'confirmat':
+        return 'label label-primary';
 
 
       }

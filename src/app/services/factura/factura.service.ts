@@ -47,5 +47,23 @@ export class FacturaService {
             return resp.factura;
           });
       }
+      carregarFactura( id: string) {
+        const url = URL_SERVICIOS + '/factura/' + id;
+
+        return this.http.get( url )
+                  .map( (resp: any) => resp.factura );
+      }
+
+      actualitzar_idfactura_pressupostdetall( pressupost: string, factura: string) {
+        let url = URL_SERVICIOS + '/pressupostdetall/actualitzafactura_perpressupost/' + pressupost + '/' + factura ;
+
+        url += '?token=' + this._usuarioService.token;
+
+        return this.http.get( url )
+            .map( (resp: any) => {
+              // swal('Pressupost Detall Creado', pressupost._id, 'success');
+              return resp.pressupostos;
+            });
+      }
 
 }

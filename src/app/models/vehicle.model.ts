@@ -8,6 +8,7 @@ export class Vehicle {
         public matricula: string,
         public places: number,
         public classificacio: string,
+        public color: string,
         public observacions?: string,
         public img?: string,
         public temporada_extra?: number,
